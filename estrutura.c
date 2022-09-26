@@ -219,15 +219,15 @@ int eConexo(Vertice G[], int ordem){
 }
 /*
  *Verifica quais sao as arestas de corte
+ retornando 1 se o vertice for, caso contrario 0
  */
 
-void ArestasCorte(Vertice G[], int ordem, int v)
+int ArestasCorte(Vertice G[], int ordem, int v)
 {
 	int i,j,c,condpar;
 	Aresta *aux;
 	Vertice *C;
 	i=j=c=0;
-	criaGrafo(&C,c);
 
 	if (v<0 || v>= ordem)
 	   return(-1);
@@ -239,16 +239,13 @@ void ArestasCorte(Vertice G[], int ordem, int v)
 	    if(aux->nome == v) c++;
 	
 	}
+	criaGrafo(&C,c);
 	for(; aux!=NULL; aux= aux->prox, i++)
 	{
 		if (G[i].prim == aux->prox)
 		acrecentaAresta(C,c,G[i].prim,aux->prox);
 	}
 	    
-	    
-	    
-	
-	
 	/*
 	 * com a variavel condpar verifica se nenhum novo vertice foi marcado com 1
 	 *caso nenhum tenha sido marcado, a condicional no fim , faz com que saia do loop
@@ -259,7 +256,7 @@ void ArestasCorte(Vertice G[], int ordem, int v)
 		for(;j<c;j++)
 		{
 			
-			if (j == C[j])
+			if (j == C[j].nome)
 			if(G[aux->nome].marc == 1 && G[j].marc == 0)
 			{
 				G[j].marc == 1;
