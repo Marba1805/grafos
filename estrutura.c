@@ -227,7 +227,7 @@ void ArestasCorte(Vertice G[], int ordem, int v)
 	Aresta *aux;
 	Vertice *C;
 	i=j=c=0;
-	criaGrafo(&C,c)
+	criaGrafo(&C,c);
 
 	if (v<0 || v>= ordem)
 	   return(-1);
@@ -237,11 +237,12 @@ void ArestasCorte(Vertice G[], int ordem, int v)
 	for(; aux!=NULL; aux= aux->prox, c++)
 	{
 	    if(aux->nome == v) c++;
-	    for(; aux!=NULL; aux= aux->prox, i++)
-		{
-			if (G[i].prim == aux->prox)
-			acrecentaAresta()
-		}
+	
+	}
+	for(; aux!=NULL; aux= aux->prox, i++)
+	{
+		if (G[i].prim == aux->prox)
+		acrecentaAresta(C,c,G[i].prim,aux->prox);
 	}
 	    
 	    
