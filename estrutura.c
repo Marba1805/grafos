@@ -226,7 +226,6 @@ int ArestasCorte(Vertice G[], int ordem, int v)
 {
 	int i,j,c,condpar;
 	Aresta *aux;
-	Vertice *C;
 	i=j=c=0;
 
 	if (v<0 || v>= ordem)
@@ -239,12 +238,6 @@ int ArestasCorte(Vertice G[], int ordem, int v)
 	    if(aux->nome == v) c++;
 	
 	}
-	criaGrafo(&C,c);
-	for(; aux!=NULL; aux= aux->prox, i++)
-	{
-		if (G[i].prim == aux->prox)
-		acrecentaAresta(C,c,G[i].prim,aux->prox);
-	}
 	    
 	/*
 	 * com a variavel condpar verifica se nenhum novo vertice foi marcado com 1
@@ -256,14 +249,14 @@ int ArestasCorte(Vertice G[], int ordem, int v)
 		for(;j<c;j++)
 		{
 			
-			if (j == C[j].nome)
-			if(C[aux->nome].marc == 1 && C[j].marc == 0)
+			if (j == G[j].nome)
+			if(G[aux->nome].marc == 1 && G[j].marc == 0)
 			{
-				C[j].marc == 1;
+				G[j].marc == 1;
 				condpar = 0;
 			}	
 		}
-		aux = C[j].prim;
+		aux = G[j].prim;
 		
 		if (condpar == 1)
 			return condpar;
