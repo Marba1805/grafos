@@ -259,7 +259,7 @@ void ArestasCorte(Vertice G[], int ordem, int v)
 		for(;j<c;j++)
 		{
 			
-			if (j == C[j].prox)
+			if (j == C[j])
 			if(G[aux->nome].marc == 1 && G[j].marc == 0)
 			{
 				G[j].marc == 1;
