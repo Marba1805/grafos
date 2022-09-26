@@ -257,12 +257,13 @@ int ArestasCorte(Vertice G[], int ordem, int v)
 		{
 			
 			if (j == C[j].nome)
-			if(G[aux->nome].marc == 1 && G[j].marc == 0)
+			if(C[aux->nome].marc == 1 && C[j].marc == 0)
 			{
-				G[j].marc == 1;
+				C[j].marc == 1;
 				condpar = 0;
 			}	
 		}
+		aux = C[j].prim;
 		
 		if (condpar == 1)
 			return condpar;
