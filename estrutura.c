@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
+#include <memory.h>
 
 
 /* 
@@ -19,6 +20,7 @@ typedef struct aresta{ /* Celula de uma lista de arestas */
 typedef struct vertice{  /* Cada vertice tem um ponteiro para uma lista de arestas incidentes nele */
 	int nome;
 	int comp;
+	int marc;
 	Aresta *prim;
 }Vertice;
 
@@ -67,26 +69,6 @@ void destroiGrafo(Vertice **G, int ordem){
 	}
     free(*G);
 }
-/*
- *Verifica quais sao as arestas de corte
- */
-
-void ArestasCorte(Vertice **G, int ordem){
-	int i;
-    Aresta *a, *n;
-    
-	for(i=0; i<ordem; i++){ /* Remove lista de adjacencia de cada vertice */
-	    a= (*G)[i].prim;
-        while (a!= NULL){
-              n= a->prox;
-              	if (a ->prox <= 1 )
-				{
-					printf("  v%d", a->nome);
-				}
-              a= n;
-        }
-	}
-}
 
 /*  
  * Acrescenta uma nova aresta em um grafo previamente criado. 
@@ -130,7 +112,7 @@ void imprimeGrafo(Vertice G[], int ordem){
 	Aresta *aux;
 
 	printf("\nOrdem:   %d",ordem);
-	printf("\nLista de Adjacencia (custos das arestas entre par?nteses):\n");
+	printf("\nLista de Adjacencia (custos das arestas entre parenteses):\n");
 
 	for (i=0; i<ordem; i++){
 		printf("\n    v%d(%d): ", i, G[i].comp);
@@ -232,15 +214,75 @@ int eConexo(Vertice G[], int ordem){
 		if(G[i].comp==0) return(0);
 	}
 	return(1);
+	
+	
 }
+/*
+ *Verifica quais sao as arestas de corte
+ */
+
+void ArestasCorte(Vertice G[], int ordem, int v)
+{
+	int i,j,c,condpar;
+	Aresta *aux;
+	Vertice *C;
+	i=j=c=0;
+	criaGrafo(&C,c)
+
+	if (v<0 || v>= ordem)
+	   return(-1);
+
+	G[v].marc = 1;
+	aux= G[v].prim;
+	for(; aux!=NULL; aux= aux->prox, c++)
+	{
+	    if(aux->nome == v) c++;
+	    for(; aux!=NULL; aux= aux->prox, i++)
+		{
+			if (G[i].prim == aux->prox)
+			acrecentaAresta()
+		}
+	}
+	    
+	    
+	    
+	
+	
+	/*
+	 * com a variavel condpar verifica se nenhum novo vertice foi marcado com 1
+	 *caso nenhum tenha sido marcado, a condicional no fim , faz com que saia do loop
+	 */
+	while (aux != NULL)
+	{
+		condpar =1;
+		for(;j<ordem;j++)
+		{
+			
+			if (j == G.prox)
+			if(G[aux->nome].marc == 1 && G[j].marc == 0)
+			{
+				G[j].marc == 1;
+				condpar = 0;
+			}	
+		}
+		
+		if (condpar == 1)
+			return condpar;
+			break;
+	
+	}
+	
+
+}
+
 
 /*
  * Programinha simples para testar a representacao de grafo
  */
-int main(int argc, char *argv[]) {
+int main(void) {
     int i,v;
 	Vertice *G;
-	int ordemG= 6; 
+	int ordemG= 7; 
 		
 	criaGrafo(&G, ordemG);
 	acrescentaAresta(G,ordemG,2,3,1);
@@ -249,6 +291,7 @@ int main(int argc, char *argv[]) {
 	acrescentaAresta(G,ordemG,0,2,1);
 	acrescentaAresta(G,ordemG,0,3,1);
 	acrescentaAresta(G,ordemG,4,5,1);
+	acrescentaAresta(G,ordemG,4,1,1);
 
 	
 	for(v=0; v<ordemG;v++){
@@ -267,6 +310,8 @@ int main(int argc, char *argv[]) {
     else
        printf("O grafo nao e conexo\n");
 	imprimeGrafo(G, ordemG);
+	
+/*	ArestasCorte(G, ordemG); */
 
 	destroiGrafo(&G, ordemG);
     system("PAUSE");
