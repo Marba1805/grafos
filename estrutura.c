@@ -61,11 +61,31 @@ void destroiGrafo(Vertice **G, int ordem){
 	    a= (*G)[i].prim;
         while (a!= NULL){
               n= a->prox;
-              free(a);
+				free(a);
               a= n;
         }
 	}
     free(*G);
+}
+/*
+ *Verifica quais sao as arestas de corte
+ */
+
+void ArestasCorte(Vertice **G, int ordem){
+	int i;
+    Aresta *a, *n;
+    
+	for(i=0; i<ordem; i++){ /* Remove lista de adjacencia de cada vertice */
+	    a= (*G)[i].prim;
+        while (a!= NULL){
+              n= a->prox;
+              	if (a ->prox <= 1 )
+				{
+					printf("  v%d", a->nome);
+				}
+              a= n;
+        }
+	}
 }
 
 /*  
