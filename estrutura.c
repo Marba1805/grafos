@@ -256,10 +256,10 @@ void ArestasCorte(Vertice G[], int ordem, int v)
 	while (aux != NULL)
 	{
 		condpar =1;
-		for(;j<ordem;j++)
+		for(;j<c;j++)
 		{
 			
-			if (j == G.prox)
+			if (j == C[j].prox)
 			if(G[aux->nome].marc == 1 && G[j].marc == 0)
 			{
 				G[j].marc == 1;
