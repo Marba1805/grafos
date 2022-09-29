@@ -276,7 +276,7 @@ int ArestasCorte(Vertice G[], int ordem, int v)
  * Programinha simples para testar a representacao de grafo
  */
 int main(void) {
-    int i,v;
+    int i,v,c;
 	Vertice *G;
 	int ordemG= 7; 
 		
@@ -307,8 +307,9 @@ int main(void) {
        printf("O grafo nao e conexo\n");
 	imprimeGrafo(G, ordemG);
 	
-/*	ArestasCorte(G, ordemG); */
-
+	c =ArestasCorte(G, ordemG,5); 
+	printf("O grau maximo do grafo e %d\n", c);
+	
 	destroiGrafo(&G, ordemG);
     system("PAUSE");
 	return 0;
