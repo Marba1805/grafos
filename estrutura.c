@@ -247,11 +247,12 @@ int ArestasCorte(Vertice G[], int ordem, int v)
 	 * com a variavel condpar verifica se nenhum novo vertice foi marcado com 1
 	 *caso nenhum tenha sido marcado, a condicional no fim , faz com que saia do loop
 	 */
-	while (aux != NULL)
+	while (condpar !=1)
 	{
 		condpar =1;
 		for(;j<c;j++)
 		{
+			printf("entrei no loop maior\n");
 			
 			if (j == G[j].nome)
 			if(G[aux->nome].marc == 1 && G[j].marc == 0)
@@ -262,11 +263,8 @@ int ArestasCorte(Vertice G[], int ordem, int v)
 		}
 		aux = G[j].prim;
 		
-		if (condpar == 1)
-			return condpar;
-			break;
-	
 	}
+	return condpar;
 	
 
 }
@@ -278,7 +276,7 @@ int ArestasCorte(Vertice G[], int ordem, int v)
 int main(void) {
     int i,v,c;
 	Vertice *G;
-	int ordemG= 7; 
+	int ordemG= 6; 
 		
 	criaGrafo(&G, ordemG);
 	acrescentaAresta(G,ordemG,2,3,1);
@@ -308,7 +306,7 @@ int main(void) {
 	imprimeGrafo(G, ordemG);
 	
 	c =ArestasCorte(G, ordemG,5); 
-	printf("O grau maximo do grafo e %d\n", c);
+	if (c==1) printf("O Vertice 5 eh tem vertice de corte %d\n", c);
 	
 	destroiGrafo(&G, ordemG);
     system("PAUSE");
