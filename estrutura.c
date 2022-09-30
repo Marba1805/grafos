@@ -194,6 +194,11 @@ int eConexo(Vertice G[], int ordem){
 	Aresta *aux;
 	
 	if (ordem == 0) return(0); /* Grafo vazio */
+	/*incializando a variavel comp da estrututra vertice como 0 */
+	for (;i<ordem;i++)
+	{
+		G[i].comp =0;
+	}
 	G[0].comp= 1; /* Anoto um "vertice inicial" com 1 */
 	
 	for(i=1; i<ordem; i++){
@@ -221,51 +226,61 @@ int eConexo(Vertice G[], int ordem){
 	
 	
 }
+
+
 /*
  *Verifica quais sao as arestas de corte
- retornando 1 se o vertice for, caso contrario 0
+ *retornando 1 se o vertice for, caso contrario 0
+ *Isso se da por meio de fazer subgrafos conexos maximos de cada vertice, 
+ *e deletando cada aresta e testando para ver se a falta dela deixa 
+ *o subgrafo desconexo
  */
 
-int ArestasCorte(Vertice G[], int ordem, int v)
+int ArestasCorte(Vertice G[], int ordem)
 {
-	int i,j,c,condpar;
+	
+	Vertice *Gaux;	
+	
+	int i,j,c,achou;
 	Aresta *aux;
 	i=j=c=0;
-
-	if (v<0 || v>= ordem)
-	   return(-1);
-
-	G[v].marc = 1;
-	aux= G[v].prim;
-	for(; aux!=NULL; aux= aux->prox, c++)
+	/*incializando a variavel comp da estrututra vertice como 0 */
+	for (;i<ordem;i++)
 	{
-	    if(aux->nome == v) c++;
-	
+		G[i].comp =0;
 	}
-	    
-	/*
-	 * com a variavel condpar verifica se nenhum novo vertice foi marcado com 1
-	 *caso nenhum tenha sido marcado, a condicional no fim , faz com que saia do loop
-	 */
-	while (condpar !=1)
+	Gaux = G;
+	for (i=0;i<ordem;i++)
 	{
-		condpar =1;
-		for(;j<c;j++)
+		aux = Gaux[i].prim;
+		for(;aux!=NULL;aux=aux->prox)
 		{
-			printf("entrei no loop maior\n");
-			
-			if (j == G[j].nome)
-			if(G[aux->nome].marc == 1 && G[j].marc == 0)
-			{
-				G[j].marc == 1;
-				condpar = 0;
-			}	
+			c++;
 		}
-		aux = G[j].prim;
-		
+		criaGrafo(&Gaux, c);
+		for(;aux!=NULL;aux=aux->prox)
+		{
+			acrescentaAresta()
+		}
 	}
-	return condpar;
-	
+//	Gaux=G;
+//	do { /* Repito enquanto encontrar vertice nao anotado adjacente a anotado */
+//		achou = 0;
+//		for(i=0; i<ordem; i++){
+//			Gaux=G;
+//			if(Gaux[i].comp == 1){ /* Vertice i esta anotado */
+//				aux= Gaux[i].prim;
+//				for( ; aux!=NULL; aux= aux->prox){
+//					if(Gaux[aux->nome].comp == 0){/* Achei nao anotado adjacente a anotado */
+//						Gaux[aux->nome].comp= 1;  /* Anoto novo vertice*/
+//						achou= 1;              /* Indico que anotei um novo vertice */
+//					}
+//					
+//				}
+//			}
+//		}
+//	} while(achou);
+//	
 
 }
 
@@ -305,9 +320,9 @@ int main(void) {
        printf("O grafo nao e conexo\n");
 	imprimeGrafo(G, ordemG);
 	
-	c =ArestasCorte(G, ordemG,5); 
+/*	c =ArestasCorte(G, ordemG,5); 
 	if (c==1) printf("O Vertice 5 eh tem vertice de corte %d\n", c);
-	
+*/
 	destroiGrafo(&G, ordemG);
     system("PAUSE");
 	return 0;
