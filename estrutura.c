@@ -236,51 +236,60 @@ int eConexo(Vertice G[], int ordem){
  *o subgrafo desconexo
  */
 
-int ArestasCorte(Vertice G[], int ordem)
+int ArestasCorte(Vertice G[], int ordem,int v[])
 {
 	
-	Vertice *Gaux;	
-	
+	Vertice *Gaux1;		
 	int i,j,c,achou;
-	Aresta *aux;
+	Aresta *aux,*a,*n;
 	i=j=c=0;
 	/*incializando a variavel comp da estrututra vertice como 0 */
 	for (;i<ordem;i++)
 	{
 		G[i].comp =0;
 	}
-	Gaux = G;
+	Gaux1 = G;
 	for (i=0;i<ordem;i++)
 	{
-		aux = Gaux[i].prim;
+		/*cria-se um grafo auxiliar, para conter um subgrafo maximo
+		* conexo com todos os vertices o possiveis saindo de cada
+		*vertice do grafo por completo*/
+		aux = G[i].prim;
 		for(;aux!=NULL;aux=aux->prox)
 		{
 			c++;
 		}
-		criaGrafo(&Gaux, c);
+		
+		criaGrafo(&Gaux1, c);
 		for(;aux!=NULL;aux=aux->prox)
 		{
-			acrescentaAresta()
+			acrescentaAresta(Gaux1,c,aux->nome,aux->prox,1);
 		}
+		for(i=0; i<ordem; i++){
+			a = Gaux1[i].prim;
+			aux= Gaux1[i].prim;
+			for( ; aux!=NULL; aux= aux->prox)
+			{
+				n= a;
+				free(a);
+              	if (eConexo(Gaux1,c)==0)
+            	{	
+            		for (j=0;j<ordem;j++)
+            		{
+            			if(Gaux1[j].prim!=n->nome)
+            			{
+            				v[c] = n->nome;
+						}
+					}
+        			
+				}
+				a= n;
+				n=a->prox;
+			}
+		}
+		
 	}
-//	Gaux=G;
-//	do { /* Repito enquanto encontrar vertice nao anotado adjacente a anotado */
-//		achou = 0;
-//		for(i=0; i<ordem; i++){
-//			Gaux=G;
-//			if(Gaux[i].comp == 1){ /* Vertice i esta anotado */
-//				aux= Gaux[i].prim;
-//				for( ; aux!=NULL; aux= aux->prox){
-//					if(Gaux[aux->nome].comp == 0){/* Achei nao anotado adjacente a anotado */
-//						Gaux[aux->nome].comp= 1;  /* Anoto novo vertice*/
-//						achou= 1;              /* Indico que anotei um novo vertice */
-//					}
-//					
-//				}
-//			}
-//		}
-//	} while(achou);
-//	
+return v;
 
 }
 
@@ -289,9 +298,10 @@ int ArestasCorte(Vertice G[], int ordem)
  * Programinha simples para testar a representacao de grafo
  */
 int main(void) {
-    int i,v,c;
+    int i,v,c,*Acortes,*a;
 	Vertice *G;
 	int ordemG= 6; 
+
 		
 	criaGrafo(&G, ordemG);
 	acrescentaAresta(G,ordemG,2,3,1);
@@ -320,9 +330,8 @@ int main(void) {
        printf("O grafo nao e conexo\n");
 	imprimeGrafo(G, ordemG);
 	
-/*	c =ArestasCorte(G, ordemG,5); 
-	if (c==1) printf("O Vertice 5 eh tem vertice de corte %d\n", c);
-*/
+	Acortes = ArestaCortes(G,ordemG,a);
+
 	destroiGrafo(&G, ordemG);
     system("PAUSE");
 	return 0;
